@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Identity.Data;
+using Identity.Domain.Services;
 using Identity.Model;
 using Identity.Security.Token;
+using Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -96,6 +98,10 @@ namespace Identity
             //    };
             //});
             #endregion
+
+            services.AddScoped<ITokenHandler, TokenHandler>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IUserService, UserSerivce>();
 
             services.AddControllers();
         }
