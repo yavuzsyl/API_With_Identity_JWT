@@ -82,7 +82,7 @@ namespace Identity
             //    opts.DefaultAuthenticateScheme = "CustomSchema";
             //    opts.DefaultChallengeScheme = "CustomSchema";
             //    //identity ile token sisteminin eþleþmesi için tam olarak bakacaðým ne iþe yaradýðýna
-            //}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, jwtBearerOptions =>
+            //}).AddJwtBearer("CustomSchema", jwtBearerOptions =>
             //{
             //    jwtBearerOptions.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
             //    {
@@ -97,6 +97,15 @@ namespace Identity
             //        ClockSkew = TimeSpan.Zero//farklý saat dilimlerinde token ömrünü uzatmak için kullanýlýr
             //    };
             //});
+            #endregion
+            #region Cors
+            services.AddCors(opts =>
+            {
+                opts.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
             #endregion
 
             services.AddScoped<ITokenHandler, TokenHandler>();
@@ -113,6 +122,9 @@ namespace Identity
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 

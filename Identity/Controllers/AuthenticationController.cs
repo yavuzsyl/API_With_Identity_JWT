@@ -6,6 +6,7 @@ using Identity.Domain.Response;
 using Identity.Domain.Services;
 using Identity.ResourceModels;
 using Identity.Security.Token;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,7 @@ namespace Identity.Controllers
 
         //gelen request headerındaki token payloadından user id ile identity kullanıcının giriş yapıp yapmadığı kontrol edecek
         [HttpGet]
+        [Authorize]
         public IActionResult IsAuthenticated() => Ok(User.Identity.IsAuthenticated);
 
         [HttpPost]
