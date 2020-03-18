@@ -36,7 +36,7 @@ namespace Identity.Controllers
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            throw new NotImplementedException();
+
         }
         //action çalışırken password'u modelstate içinden kaldırarak zorunluluğunu etkisiz kılacak
         public void OnActionExecuting(ActionExecutingContext context)

@@ -122,16 +122,18 @@ namespace Identity
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseAuthentication();
-            app.UseStaticFiles();
+            app.UseRouting();
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseStaticFiles();
+
+
+
+            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

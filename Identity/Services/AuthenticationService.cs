@@ -19,7 +19,7 @@ namespace Identity.Services
         private readonly ITokenHandler tokenHandler;
         private readonly AppTokenOptions tokenOptions;
         private readonly IUserService userService;
-        public AuthenticationService(ITokenHandler tokenHandler, IUserService userService, IOptions<AppTokenOptions> options, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppUser> roleManager) : base(userManager, signInManager, roleManager)
+        public AuthenticationService(ITokenHandler tokenHandler, IUserService userService, IOptions<AppTokenOptions> options, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager) : base(userManager, signInManager, roleManager)
         {
             this.tokenHandler = tokenHandler;
             this.tokenOptions = options.Value;
@@ -61,7 +61,7 @@ namespace Identity.Services
 
         public async Task<BaseResponse<AccessToken>> SignIn(SignInResourceModel model)
         {
-            var user = await userManager.FindByNameAsync(model.Email);
+            var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null)
                 return new BaseResponse<AccessToken>("No user with this email");
 
@@ -108,7 +108,7 @@ namespace Identity.Services
         {
             var newUser = new AppUser() { UserName = model.UserName, Email = model.Email };
 
-            IdentityResult result = await userManager.CreateAsync(newUser);
+            IdentityResult result = await userManager.CreateAsync(newUser, model.Password);
 
             if (!result.Succeeded)
                 return new BaseResponse<UserResourceModel>(result.Errors.First().Description);

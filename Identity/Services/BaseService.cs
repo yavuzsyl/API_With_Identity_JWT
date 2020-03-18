@@ -12,8 +12,8 @@ namespace Identity.Services
     {
         protected UserManager<AppUser> userManager { get; }
         protected SignInManager<AppUser> signInManager { get; }
-        protected RoleManager<AppUser> roleManager { get; }
-        public BaseService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppUser> roleManager)
+        protected RoleManager<AppRole> roleManager { get; }
+        public BaseService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager)
         {
             this.userManager = userManager; this.signInManager = signInManager; this.roleManager = roleManager;
         }

@@ -14,7 +14,7 @@ namespace Identity.Services
 {
     public class UserSerivce : BaseService, IUserService
     {
-        public UserSerivce(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppUser> roleManager) : base(userManager, signInManager, roleManager)
+        public UserSerivce(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager) : base(userManager, signInManager, roleManager)
         {
         }
 
@@ -59,7 +59,7 @@ namespace Identity.Services
         public async Task<BaseResponse<UserResourceModel>> UpdateUser(UserResourceModel model, string userName)
         {
             AppUser appUser = await userManager.FindByNameAsync(userName);
-            if (appUser != null)
+            if (appUser == null)
                 return new BaseResponse<UserResourceModel>("There is no user such this username");
             if (userManager.Users.Any(x => x.PhoneNumber == model.PhoneNumber))
                 return new BaseResponse<UserResourceModel>("This phone number already in use");
